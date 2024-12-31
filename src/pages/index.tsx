@@ -35,7 +35,7 @@ export default function IndexPage() {
           wrapper="span"
           speed={75}
           role="heading"
-          className="text-xl text-center md:text-2xl text-red-300 font-semibold"
+          className="text-xl text-center md:text-2xl text-red-300 font-medium"
         />
 
         <p className="text-white text-2xl text-center max-w-4xl mt-3 mb-5 leading-relaxed">
