@@ -49,8 +49,6 @@ export default function RoastPage() {
 
       try {
         const profileResponse = await fetchProfile(username);
-        console.log("Profile response:", profileResponse);
-
         setRoastedBio(profileResponse);
 
         if (!profileResponse) {
@@ -69,7 +67,6 @@ export default function RoastPage() {
         );
 
         if (roastResponse.success) {
-          console.log("Generated Roast:", roastResponse.data);
           setRoastedUsernames((prev) =>
             prev.includes(username) ? prev : [...prev, username]
           );
