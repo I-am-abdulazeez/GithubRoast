@@ -12,8 +12,9 @@ import DefaultLayout from "@/layouts/default";
 import { fetchProfile } from "@/helpers/fetch-profile";
 import { generateRoast } from "@/helpers/generate-roast";
 import { handleAPIError } from "@/helpers/handle-error";
-import { GithubAPIResponse } from "@/types";
 import { formatDate } from "@/helpers/format-date";
+
+import { GithubAPIResponse } from "@/types";
 
 export default function RoastPage() {
   const [username, setUsername] = useState("");
