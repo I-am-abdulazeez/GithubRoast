@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { TypeAnimation } from "react-type-animation";
 
@@ -45,14 +45,16 @@ export default function IndexPage() {
           fellow devs—your GitHub presence will never be the same! 🔥😂
         </p>
 
-        <Button
-          size="lg"
-          className="text-white font-semibold text-lg bg-red-500 hover:bg-red-600"
-          radius="sm"
-          onClick={() => navigate("/roastme")}
-        >
-          🔥 Turn Up the Heat!
-        </Button>
+        <Link to="/roastme">
+          <Button
+            as="a"
+            size="lg"
+            className="text-white font-semibold text-lg bg-red-500 hover:bg-red-600"
+            radius="sm"
+          >
+            🔥 Turn Up the Heat!
+          </Button>
+        </Link>
       </section>
     </DefaultLayout>
   );
