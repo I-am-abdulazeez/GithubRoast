@@ -1,5 +1,15 @@
-import { SVGProps } from "react";
+export type GithubAPIResponse = {
+  message: string;
+  status: string;
 
-export type IconSvgProps = SVGProps<SVGSVGElement> & {
-  size?: number;
+  id: number;
+  name: string;
+  company: string;
+  avatar_url: string;
+  bio: string | null;
+  public_repos: number;
+  followers: number;
+  following: number;
+  location: string;
+  created_at: string;
 };
