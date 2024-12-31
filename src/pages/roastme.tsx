@@ -3,16 +3,16 @@ import { useState, useCallback, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Switch } from "@nextui-org/switch";
-import { User } from "@nextui-org/user";
 
 import toast from "react-hot-toast";
 
 import DefaultLayout from "@/layouts/default";
 
+import RoastCard from "@/components/roast-card";
+
 import { fetchProfile } from "@/helpers/fetch-profile";
 import { generateRoast } from "@/helpers/generate-roast";
 import { handleAPIError } from "@/helpers/handle-error";
-import { formatDate } from "@/helpers/format-date";
 
 import { GithubAPIResponse } from "@/types";
 
@@ -132,21 +132,12 @@ export default function RoastPage() {
             disabled={isLoading}
             isLoading={isLoading}
           >
-            {isLoading ? "Loading..." : "🔥 Roast me!"}
+            {isLoading ? "Roasting..." : "🔥 Roast me!"}
           </Button>
         </form>
-        <div>
+        <div className="mt-5">
           {roastRes && (
-            <div className="w-full max-w-4xl p-8 bg-gray-900 rounded-lg mt-5 text-white">
-              <User
-                avatarProps={{
-                  src: roastedBio?.avatar_url,
-                }}
-                description={`Joined: ${formatDate(roastedBio?.created_at!)}`}
-                name={roastedBio?.name}
-              />
-              <p className="mt-2">{roastRes}</p>
-            </div>
+            <RoastCard roastRes={roastRes} roastedBio={roastedBio} />
           )}
         </div>
       </div>
