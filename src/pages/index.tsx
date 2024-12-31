@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { TypeAnimation } from "react-type-animation";
 
@@ -8,7 +8,7 @@ import { title } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
 
 export default function IndexPage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <DefaultLayout>
