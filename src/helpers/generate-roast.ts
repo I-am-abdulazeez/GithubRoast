@@ -50,8 +50,6 @@ export const generateRoast = async (
       message: "Failed to generate a roast. Please try again.",
     };
   } catch (error) {
-    console.error("Error generating roast:", error);
-
     // Narrowing the 'error' type
     if (error instanceof Error) {
       return {
