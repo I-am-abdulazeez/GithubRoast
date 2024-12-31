@@ -11,7 +11,7 @@ export default function Footer() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <footer className="w-full flex items-center justify-center py-3">
+    <footer className="w-full flex items-center justify-center pb-1">
       <p className="text-center text-gray-400 text-lg">
         Created by:{" "}
         <span
