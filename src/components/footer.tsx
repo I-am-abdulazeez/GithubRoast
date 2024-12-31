@@ -11,7 +11,7 @@ import { Button } from "@nextui-org/button";
 
 import toast from "react-hot-toast";
 
-import UserCard from "@/components/user-card";
+import RoastCard from "@/components/roast-card";
 
 import { generateRoast } from "@/helpers/generate-roast";
 
@@ -85,7 +85,11 @@ export default function Footer() {
             </Button>
             {roastedBio && roastRes && (
               <div className="mt-2">
-                <UserCard roastedBio={roastedBio} roastRes={roastRes} isModal />
+                <RoastCard
+                  roastedBio={roastedBio}
+                  roastRes={roastRes}
+                  isModal
+                />
               </div>
             )}
           </ModalBody>
