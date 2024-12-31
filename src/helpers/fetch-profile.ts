@@ -1,16 +1,29 @@
+import { GithubAPIResponse } from "@/types";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export const fetchProfile = async (username: string) => {
-  const response = await axios.get(
-    "https://linkedin-data-api.p.rapidapi.com/",
-    {
-      headers: {
-        "X-RapidAPI-Key": "1ded6edae5msh13a9c5c0a9370b6p16875cjsn3fd90eb8d61a",
-        "X-RapidAPI-Host": "linkedin-data-api.p.rapidapi.com",
-      },
-      params: { username },
-    }
-  );
+  try {
+    const response = await axios.get(
+      `https://api.github.com/users/${username}`,
+      {
+        headers: {
+          Accept: "application/vnd.github.v3+json",
+        },
+      }
+    );
 
-  return response.data; // Axios automatically parses JSON
+    if (response.status !== 200) {
+      throw new Error("GitHub API returned an error");
+    }
+
+    return response.data as GithubAPIResponse;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      const errorMessage = error.response?.data?.message || "Profile not found.";
+      toast.error(`${errorMessage}`);
+    } else {
+      toast.error("Failed to fetch profile data. Please try again.");
+    }
+  }
 };
