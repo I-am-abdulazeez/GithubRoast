@@ -15,6 +15,12 @@ import { generateRoast } from "@/helpers/generate-roast";
 import { handleAPIError } from "@/helpers/handle-error";
 
 import { GithubAPIResponse } from "@/types";
+import {
+  checkAndCreateUser,
+  client,
+  fetchRoastedCount,
+} from "@/services/appwrite";
+import { RealtimeResponseEvent } from "appwrite";
 
 export default function RoastPage() {
   const [username, setUsername] = useState("");
@@ -23,18 +29,23 @@ export default function RoastPage() {
     undefined
   );
   const [roastRes, setRoastRes] = useState<string | undefined>(undefined);
-
   const [isLoading, setIsLoading] = useState(false);
+  const [roastedCount, setRoastedCount] = useState<number>(0);
 
-  // Maintain an array of roasted usernames
-  const [roastedUsernames, setRoastedUsernames] = useState<string[]>(() => {
-    const storedUsernames = localStorage.getItem("roastedUsernames");
-    return storedUsernames ? JSON.parse(storedUsernames) : [];
-  });
-
+  // Fetch the count of roasted users on page load
   useEffect(() => {
-    localStorage.setItem("roastedUsernames", JSON.stringify(roastedUsernames));
-  }, [roastedUsernames]);
+    fetchRoastedCount(setRoastedCount);
+
+    const unsubsribe = client.subscribe(
+      ["databases.roasted_users.users.create"],
+      (response: RealtimeResponseEvent<unknown>) => {
+        if (response.events[0] === "documents.create") {
+          setRoastedCount((prevCount) => prevCount + 1);
+        }
+      }
+    );
+    return () => unsubsribe();
+  }, []);
 
   const handleRoast = useCallback(
     async (e: React.FormEvent) => {
@@ -44,9 +55,7 @@ export default function RoastPage() {
         toast.error("Please enter a valid GitHub username.");
         return;
       }
-
       setIsLoading(true);
-
       try {
         const profileResponse = await fetchProfile(username);
         setRoastedBio(profileResponse);
@@ -67,10 +76,9 @@ export default function RoastPage() {
         );
 
         if (roastResponse.success) {
-          setRoastedUsernames((prev) =>
-            prev.includes(username) ? prev : [...prev, username]
-          );
           setRoastRes(roastResponse.data);
+
+          await checkAndCreateUser(username, setRoastedCount);
         } else {
           toast.error(roastResponse?.message!);
         }
@@ -80,7 +88,7 @@ export default function RoastPage() {
         setIsLoading(false);
       }
     },
-    [username, soundNigerian, roastedUsernames, roastedBio, roastRes]
+    [username, soundNigerian, roastedBio, roastRes]
   );
 
   return (
@@ -92,9 +100,9 @@ export default function RoastPage() {
           className="w-48 rounded-xl mb-2"
         />
         <div>
-          <h2 className="text-xl font-semibold text-center mb-2 text-white">
-            {roastedUsernames.length > 0
-              ? `Roasted ${roastedUsernames.length} Profile(s).`
+          <h2 className="text-medium font-medium text-center mb-2 text-white">
+            {roastedCount > 0
+              ? `Roasted ${roastedCount} Profile(s) globally.`
               : "No bios roasted yet. Start roasting now!"}
           </h2>
         </div>
@@ -128,7 +136,6 @@ export default function RoastPage() {
             size="lg"
             fullWidth
             color="default"
-            className="font-semibold text-lg"
             disabled={isLoading}
             isLoading={isLoading}
           >
