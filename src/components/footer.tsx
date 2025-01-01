@@ -53,7 +53,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full flex items-center justify-center pb-1">
+    <footer className="w-full flex items-center justify-center pb-4">
       <p className="text-center text-gray-400 text-lg">
         Created by:{" "}
         <span
@@ -78,6 +78,7 @@ export default function Footer() {
             Start with me—click 'Roast Me First!' and see how brutal it gets!
             <Button
               onClick={handleRoastMe}
+              onTouchStart={handleRoastMe} // For mobile
               className="font-semibold"
               isLoading={isLoading}
             >
