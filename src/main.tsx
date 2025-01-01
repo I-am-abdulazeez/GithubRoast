@@ -11,12 +11,12 @@ import { Toaster } from "react-hot-toast";
 import "@/styles/globals.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <BrowserRouter>
+  <BrowserRouter>
+    <React.StrictMode>
       <Provider>
         <Toaster toastOptions={{ position: "bottom-center", duration: 5000 }} />
         <App />
       </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+    </React.StrictMode>
+  </BrowserRouter>
 );
