@@ -15,7 +15,7 @@ export default function RoastCard({
 }: RoastCardProps) {
   return (
     <div
-      className={`w-full max-w-4xl ${isModal ? "border-gray-200 bg-white text-gray-700 p-2" : "bg-gray-900 text-white p-8"} rounded-lg`}
+      className={`w-full max-w-md md:max-w-4xl ${isModal ? "border-gray-200 bg-white text-gray-700 p-2" : "bg-gray-900 text-white p-8"} rounded-lg`}
     >
       <User
         avatarProps={{
