@@ -97,11 +97,11 @@ export default function RoastPage() {
 
   return (
     <DefaultLayout>
-      <div className="flex flex-col items-center justify-center h-[90vh]">
+      <div className="flex flex-col items-center justify-center">
         <img
           src="/roastme.jpeg"
           alt="Roast Me!"
-          className="w-48 rounded-xl mb-2"
+          className="w-48 rounded-xl mb-2 mt-[6rem]"
         />
         <div>
           <h2 className="text-medium font-medium text-center mb-2 text-white">
@@ -147,7 +147,7 @@ export default function RoastPage() {
             {isLoading ? "Roasting..." : "🔥 Roast me!"}
           </Button>
         </form>
-        <div className="mt-5">
+        <div className="my-5">
           {roastRes && (
             <RoastCard roastRes={roastRes} roastedBio={roastedBio} />
           )}
