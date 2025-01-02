@@ -47,6 +47,40 @@ export default function RoastPage() {
     return () => unsubsribe();
   }, []);
 
+  const fetchAndGenerateRoast = async () => {
+    try {
+      const profileResponse = await fetchProfile(username);
+      setRoastedBio(profileResponse);
+
+      if (!profileResponse) {
+        return;
+      }
+
+      // Proceed to generate roast if profile is valid
+      const roastResponse = await generateRoast(
+        username,
+        profileResponse.bio,
+        soundNigerian,
+        profileResponse.location,
+        profileResponse.followers,
+        profileResponse.public_repos,
+        profileResponse.following
+      );
+
+      if (roastResponse.success) {
+        setRoastRes(roastResponse.data);
+
+        await checkAndCreateUser(username, setRoastedCount);
+      } else {
+        toast.error(roastResponse?.message!);
+      }
+    } catch (error) {
+      handleAPIError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleRoast = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -56,37 +90,7 @@ export default function RoastPage() {
         return;
       }
       setIsLoading(true);
-      try {
-        const profileResponse = await fetchProfile(username);
-        setRoastedBio(profileResponse);
-
-        if (!profileResponse) {
-          return;
-        }
-
-        // Proceed to generate roast if profile is valid
-        const roastResponse = await generateRoast(
-          username,
-          profileResponse.bio,
-          soundNigerian,
-          profileResponse.location,
-          profileResponse.followers,
-          profileResponse.public_repos,
-          profileResponse.following
-        );
-
-        if (roastResponse.success) {
-          setRoastRes(roastResponse.data);
-
-          await checkAndCreateUser(username, setRoastedCount);
-        } else {
-          toast.error(roastResponse?.message!);
-        }
-      } catch (error) {
-        handleAPIError(error);
-      } finally {
-        setIsLoading(false);
-      }
+      fetchAndGenerateRoast();
     },
     [username, soundNigerian, roastedBio, roastRes]
   );
@@ -136,6 +140,7 @@ export default function RoastPage() {
             size="lg"
             fullWidth
             color="default"
+            className="font-semibold"
             disabled={isLoading}
             isLoading={isLoading}
           >
