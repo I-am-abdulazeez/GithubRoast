@@ -8,19 +8,20 @@ import toast from "react-hot-toast";
 
 import DefaultLayout from "@/layouts/default";
 
-import RoastCard from "@/components/roast-card";
+import RoastCard from "@/components/ui/roast-card";
 
 import { fetchProfile } from "@/helpers/fetch-profile";
 import { generateRoast } from "@/helpers/generate-roast";
 import { handleAPIError } from "@/helpers/handle-error";
 
-import { GithubAPIResponse } from "@/types";
+import { RealtimeResponseEvent } from "appwrite";
 import {
   checkAndCreateUser,
   client,
   fetchRoastedCount,
 } from "@/services/appwrite";
-import { RealtimeResponseEvent } from "appwrite";
+
+import { GithubAPIResponse } from "@/types";
 
 export default function RoastPage() {
   const [username, setUsername] = useState("");
