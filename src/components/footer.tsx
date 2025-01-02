@@ -11,7 +11,7 @@ import { Button } from "@nextui-org/button";
 
 import toast from "react-hot-toast";
 
-import RoastCard from "@/components/roast-card";
+import RoastCard from "@/components/ui/roast-card";
 
 import { generateRoast } from "@/helpers/generate-roast";
 
