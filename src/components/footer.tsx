@@ -53,7 +53,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full flex items-center justify-center pt-2 pb-4">
+    <footer className="w-full flex items-center justify-center pt-2 pb-4 bg-[#020b20]">
       <p className="text-center text-gray-400 text-sm">
         Created by:{" "}
         <span
